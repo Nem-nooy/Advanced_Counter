@@ -71,6 +71,29 @@ fun Counter(modifier: Modifier = Modifier) {
                 fontSize = 30.sp,
             )
         }
+        Button(
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            onClick = {
+                if (count > 0)
+                    setCount(count - 1)
+            }
+        ) {
+            Text(
+                "감소",
+                fontSize = 30.sp,
+            )
+        }
+        Button(
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            onClick = {
+                setCount(0)
+            }
+        ) {
+            Text(
+                "초기화",
+                fontSize = 30.sp,
+            )
+        }
     }
 }
 
