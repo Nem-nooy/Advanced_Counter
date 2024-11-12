@@ -42,7 +42,15 @@ fun MainScreen() {
     val context = LocalContext.current  // 'LocalContext'를 써야 현재 context를 가져올 수 있다.
 
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-        Counter(Modifier.padding(innerPadding))
+        Column(
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.SpaceEvenly,
+        ) {
+            Counter()
+            Counter()
+        }
     }
 }
 
@@ -53,7 +61,7 @@ fun Counter(modifier: Modifier = Modifier) {
     var (expanded, setExpanded) = remember { mutableStateOf(false) }
 
     Column(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -62,7 +70,9 @@ fun Counter(modifier: Modifier = Modifier) {
             fontSize = 100.sp   // 강의 화면에서 크게 표시해야 하니까 쓴 것.
         )
         Button(
-            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
             onClick = {
                 //count++
                 setCount(count + 1)
@@ -75,7 +85,9 @@ fun Counter(modifier: Modifier = Modifier) {
             )
         }
         Button(
-            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
             onClick = {
                 setExpanded(!expanded)
             }
@@ -86,9 +98,11 @@ fun Counter(modifier: Modifier = Modifier) {
             )
         }
         AnimatedVisibility(expanded) {
-            Row{
+            Row {
                 Button(
-                    modifier = Modifier.padding(16.dp).weight(1F),
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .weight(1F),
                     onClick = {
                         if (count > 0)
                             setCount(count - 1)
@@ -102,7 +116,9 @@ fun Counter(modifier: Modifier = Modifier) {
                     )
                 }
                 Button(
-                    modifier = Modifier.padding(16.dp).weight(1F),
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .weight(1F),
                     onClick = {
                         setCount(0)
                         expanded = false
