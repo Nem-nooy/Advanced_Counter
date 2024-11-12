@@ -17,7 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -42,23 +42,24 @@ fun MainScreen() {
     val context = LocalContext.current  // 'LocalContext'를 써야 현재 context를 가져올 수 있다.
 
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .padding(innerPadding)
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.SpaceEvenly,
-        ) {
-            Counter()
-            Counter()
-        }
+//        Column(
+//            modifier = Modifier
+//                .padding(innerPadding)
+//                .fillMaxSize(),
+//            verticalArrangement = Arrangement.SpaceEvenly,
+//        ) {
+//            Counter()
+//            Counter()
+//        }
+        Counter(Modifier.padding(innerPadding))
     }
 }
 
 @Composable
 fun Counter(modifier: Modifier = Modifier) {
     //var value = 0
-    val (count, setCount) = remember { mutableIntStateOf(0) }
-    var (expanded, setExpanded) = remember { mutableStateOf(false) }
+    val (count, setCount) = rememberSaveable { mutableIntStateOf(0) }
+    var (expanded, setExpanded) = rememberSaveable { mutableStateOf(false) }
 
     Column(
         modifier = modifier.fillMaxWidth(),
