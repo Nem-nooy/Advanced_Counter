@@ -39,6 +39,9 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainScreen() {
+    val (count, setCount) = rememberSaveable { mutableIntStateOf(0) }
+    val (expanded, setExpanded) = rememberSaveable { mutableStateOf(false) }
+
     val context = LocalContext.current  // 'LocalContext'를 써야 현재 context를 가져올 수 있다.
 
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -51,15 +54,25 @@ fun MainScreen() {
 //            Counter()
 //            Counter()
 //        }
-        Counter(Modifier.padding(innerPadding))
+        Counter(
+            Modifier.padding(innerPadding),
+            count,
+            setCount,
+            expanded,
+            setExpanded
+        )
     }
 }
 
 @Composable
-fun Counter(modifier: Modifier = Modifier) {
+fun Counter(
+    modifier: Modifier = Modifier,
+    count: Int,
+    onChangeCount: (Int) -> Unit,
+    expanded: Boolean,
+    onChangeExpanded: (Boolean) -> Unit,
+) {
     //var value = 0
-    val (count, setCount) = rememberSaveable { mutableIntStateOf(0) }
-    var (expanded, setExpanded) = rememberSaveable { mutableStateOf(false) }
 
     Column(
         modifier = modifier.fillMaxWidth(),
@@ -76,8 +89,8 @@ fun Counter(modifier: Modifier = Modifier) {
                 .padding(16.dp),
             onClick = {
                 //count++
-                setCount(count + 1)
-                expanded = false
+                onChangeCount(count + 1)
+                onChangeExpanded(false)
             }
         ) {
             Text(
@@ -90,7 +103,7 @@ fun Counter(modifier: Modifier = Modifier) {
                 .fillMaxWidth()
                 .padding(16.dp),
             onClick = {
-                setExpanded(!expanded)
+                onChangeExpanded(!expanded)
             }
         ) {
             Text(
@@ -106,9 +119,9 @@ fun Counter(modifier: Modifier = Modifier) {
                         .weight(1F),
                     onClick = {
                         if (count > 0)
-                            setCount(count - 1)
+                            onChangeCount(count - 1)
 
-                        expanded = false;
+                        onChangeExpanded(false)
                     }
                 ) {
                     Text(
@@ -121,8 +134,8 @@ fun Counter(modifier: Modifier = Modifier) {
                         .padding(16.dp)
                         .weight(1F),
                     onClick = {
-                        setCount(0)
-                        expanded = false
+                        onChangeCount(0)
+                        onChangeExpanded(false)
                     }
                 ) {
                     Text(
