@@ -50,6 +50,8 @@ android {
 }
 
 dependencies {
+    // NOTE: observeAsState 사용하기 위해 추가
+    implementation(libs.androidx.runtime.livedata)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
